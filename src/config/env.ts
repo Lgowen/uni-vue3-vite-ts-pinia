@@ -1,17 +1,16 @@
 const apiEnv: ApiEnv = 'dev';
-
 const envMap = {
   dev: {
-    baseUrl: 'http://m.dev.xxx.com',
-    apiBaseUrl: 'https://m.devapi.xxx.com'
+    baseUrl: 'https://api-flm.llnovel.com',
+    apiBaseUrl: 'https://api-flm.llnovel.com'
   },
   beta: {
     baseUrl: 'http://m.beta.xxx.com',
     apiBaseUrl: 'https://m.betaapi.xxx.com'
   },
   prod: {
-    baseUrl: 'https://m.xxx.com',
-    apiBaseUrl: 'https://m.api.xxx.com'
+    baseUrl: 'https://api-flm.errli.cn',
+    apiBaseUrl: 'https://api-flm.errli.cn'
   },
   local: {
     baseUrl: 'http://m.dev.xxx.com',

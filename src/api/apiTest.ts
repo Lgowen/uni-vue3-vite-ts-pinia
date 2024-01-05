@@ -1,4 +1,4 @@
-import http from '@/utils/request';
+import http from '@/service/request';
 
 const apiTest = {
   getTest: (params: GetTest.params) => http.get<GetTest.data>('/test', params),

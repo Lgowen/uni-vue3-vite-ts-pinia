@@ -9,8 +9,10 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BackToTop: typeof import('./components/common/backToTop.vue')['default']
+    DefaultPage: typeof import('./components/common/defaultPage.vue')['default']
+    Overlay: typeof import('./components/common/overlay.vue')['default']
+    PageModal: typeof import('./components/common/pageModal.vue')['default']
     PullList: typeof import('./components/pullList.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
   }
 }

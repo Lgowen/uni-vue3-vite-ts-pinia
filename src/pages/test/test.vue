@@ -1,77 +1,49 @@
 <script lang="ts" setup>
-import apiTest from '@/api/apiTest';
-import { getCommonParams, setCommonParams } from '@/config/commonParams';
-import { useInit } from '@/hooks/useInit';
-import { useTitle } from '@/hooks/useTitle';
-import { onUrlPage } from '@/utils/router';
-import uniAsync from '@/utils/uniAsync';
+import { fetchHomePage } from '@/api/firstPage';
+const visible = ref(true);
 
 onLoad(() => {
-  const { pageName, pagePath, pageQuery } = useInit();
-  console.log(pageName, pagePath, pageQuery, 'pageName,pagePath, pageQuery');
+  console.log('页面初始化了');
+  getPageData();
+  uniAsyncTest();
 });
 
-const { title, changeTitle } = useTitle();
-
-const { name, fullName, updateName } = useStore('test');
-
-async function getTest() {
-  const getTest = await apiTest.getTest({ a: 1 });
-  if (!getTest) {
-    uni.showToast({
-      title: '自定义异常处理'
-    });
-    return;
+async function getPageData() {
+  try {
+    console.log(fetchHomePage, ' fetchHomePagefetchHomePage');
+    const res = await fetchHomePage({});
+    console.log(res, 'ressss');
+  } catch (err) {
+    console.log(err, 'errrrrr');
   }
-  // getTest.data?.age
-  // getTest.data?.name
-  console.log(getTest, 'getTest');
-}
-async function postTest() {
-  const postTest = await apiTest.postTest({ a: 1 });
-  if (!postTest) return;
-  // postTest.data?.val
-  console.log(postTest, 'postTest');
 }
 
-function getCommonParam() {
-  console.log(getCommonParams());
-}
-function setCommonParam() {
-  setCommonParams({ channel: 'test' });
-  getCommonParam();
-}
+const { getSystemInfo } = useStore('app');
 
 async function uniAsyncTest() {
-  const systemInfo = await uniAsync.getSystemInfo();
-  console.log(systemInfo, 'systemInfo');
+  const systemInfo = getSystemInfo();
+  console.log(systemInfo.value, 'appStore.getSystemInfo');
 }
 
-function onScrollToLower() {
-  console.log('自定义 onScrollToLower');
+function handleClickPageModal() {
+  console.log('点击了PageModal');
+}
+
+function handleClose() {
+  console.log('点击了关闭按钮');
 }
 </script>
 
 <template>
   <div class="h-screen">
-    <pullList :on-scroll-to-lower="onScrollToLower">
-      <template #list>
-        <view>name:{{ name }}</view>
-        <view>fullName:{{ fullName }}</view>
-        <view @click="updateName('newName')">updateName</view>
-        <view>title:{{ title }}</view>
-        <view @click="changeTitle">changeTitle</view>
-        <view @click="getTest">getTest</view>
-        <view @click="postTest">postTest</view>
-        <view @click="getCommonParam">getCommonParams</view>
-        <view @click="setCommonParam">setCommonParams</view>
-        <view @click="uniAsyncTest">uniAsyncTest</view>
-        <view data-url="index?a=1" @click="onUrlPage">onUrlPage</view>
-        <view class="p-10">unocss-test</view>
-        <view v-for="i in 30" :key="i" class="p10">scroll Test</view>
-      </template>
-    </pullList>
+    <pageModal
+      v-model:visible="visible"
+      @click="handleClickPageModal"
+      @close="handleClose"
+    />
+    <backToTop />
   </div>
+  <!-- <defaultPage safe-area image-type="address" text="测试一下文案是否成功" /> -->
 </template>
 
 <style lang="scss" scoped></style>
